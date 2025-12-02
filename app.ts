@@ -115,3 +115,26 @@ export function Controls() {
     </div>
   );
 }
+
+// src/components/ProductCard.tsx
+import type { Product } from '../types';
+
+type Props = Product & { rating?: string };
+
+export function ProductCard({ name, description, price, stock, category, rating }: Props) {
+  return (
+    <div className="card">
+      <div className="card-header">
+        <span className="category-tag">{category}</span>
+        <span className="stock-tag">📦 {stock} left</span>
+      </div>
+      <h2>{name}</h2>
+      <p className="description">{description}</p>
+      <div className="price-row">
+        <span className="price">${price}</span>
+        {rating && <span className="rating">{rating}</span>}
+      </div>
+      <button className="buy-btn">Add to Sleigh 🛷</button>
+    </div>
+  );
+}
