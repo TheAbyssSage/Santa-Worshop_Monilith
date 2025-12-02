@@ -138,3 +138,20 @@ export function ProductCard({ name, description, price, stock, category, rating 
     </div>
   );
 }
+
+// src/components/ProductGrid.tsx
+import { ProductCard } from './ProductCard';
+import type { Product } from '../types';
+
+export function ProductGrid({ products }: { products: (Product & { rating?: string })[] }) {
+  if (!products.length) {
+    return <div className="no-results">❄️ Brrr... No products found here! Just snow. ❄</div>;
+  }
+  return (
+    <div className="grid">
+      {products.map((p) => (
+        <ProductCard key={p.id} {...p} />
+      ))}
+    </div>
+  );
+}
