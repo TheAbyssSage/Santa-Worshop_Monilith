@@ -155,3 +155,26 @@ export function ProductGrid({ products }: { products: (Product & { rating?: stri
     </div>
   );
 }
+
+
+// src/App.tsx
+import { Controls } from './components/Controls';
+import { ProductGrid } from './components/ProductGrid';
+import { useProducts } from './hooks/useProducts';
+
+export default function App() {
+  const { data, loading, error } = useProducts();
+
+  return (
+    <main>
+      <h1>🎅 Santa's Modern Shop 🎅</h1>
+      <p className="subtitle">"Refactored for speed and cheer!"</p>
+
+      <Controls />
+
+      {loading && <p>Loading gifts… 🎁</p>}
+      {error && <p style={{ color: 'crimson' }}>Error: {error}</p>}
+      {!loading && !error && <ProductGrid products={data} />}
+    </main>
+  );
+}
