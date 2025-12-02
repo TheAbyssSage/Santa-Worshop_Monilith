@@ -71,3 +71,47 @@ export function useProducts() {
 
   return { data, loading, error, q, category };
 }
+
+
+
+// src/components/Controls.tsx
+import { useSearchParams } from 'react-router-dom';
+
+const categories = ['all', 'transport', 'clothing', 'food', 'tech', 'crafts'] as const;
+
+export function Controls() {
+  const [params, setParams] = useSearchParams();
+  const q = params.get('q') ?? '';
+  const category = params.get('category') ?? 'all';
+
+  function updateParam(key: string, value: string) {
+    const next = new URLSearchParams(params);
+    if (value) next.set(key, value);
+    else next.delete(key);
+    setParams(next);
+  }
+
+  return (
+    <div className="controls">
+      <label>🔍 Search:</label>
+      <input
+        type="text"
+        value={q}
+        placeholder="Search toys..."
+        onChange={(e) => updateParam('q', e.target.value)}
+      />
+
+      <label>📂 Category:</label>
+      <select
+        value={category}
+        onChange={(e) => updateParam('category', e.target.value)}
+      >
+        {categories.map((c) => (
+          <option key={c} value={c}>
+            {c === 'all' ? 'All Categories' : c[0].toUpperCase() + c.slice(1)}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+}
